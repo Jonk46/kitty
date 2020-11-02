@@ -779,10 +779,10 @@ section .container {
     height: 35px;
     padding-bottom: 7px!important;
   }
-  /* section {
+  section {
     top: 120px;
   }
   section.section-show {
     top: 80px;
-  } */
+  }
 }
