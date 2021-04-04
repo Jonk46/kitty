@@ -1,8 +1,8 @@
-!(function ($) {
+!(function($) {
   "use strict";
 
   // Nav Menu
-  $(document).on('click', '.nav-menu a, .mobile-nav a', function (e) {
+  $(document).on('click', '.nav-menu a, .mobile-nav a', function(e) {
     if (location.pathname.replace(/^\//, '') == this.pathname.replace(/^\//, '') && location.hostname == this.hostname) {
       var hash = this.hash;
       var target = $(hash);
@@ -17,12 +17,17 @@
         if (hash == '#header') {
           $('#header').removeClass('header-top');
           $("section").removeClass('section-show');
+          if ($('body').hasClass('mobile-nav-active')) {
+            $('body').removeClass('mobile-nav-active');
+            $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
+            $('.mobile-nav-overly').fadeOut();
+          }
           return;
         }
 
         if (!$('#header').hasClass('header-top')) {
           $('#header').addClass('header-top');
-          setTimeout(function () {
+          setTimeout(function() {
             $("section").removeClass('section-show');
             $(hash).addClass('section-show');
 
@@ -55,7 +60,7 @@
       $('#header').addClass('header-top');
       $('.nav-menu .active, .mobile-nav .active').removeClass('active');
       $('.nav-menu, .mobile-nav').find('a[href="' + initial_nav + '"]').parent('li').addClass('active');
-      setTimeout(function () {
+      setTimeout(function() {
         $("section").removeClass('section-show');
         $(initial_nav).addClass('section-show');
       }, 350);
@@ -68,21 +73,21 @@
       class: 'mobile-nav d-lg-none'
     });
     $('body').append($mobile_nav);
-    $('body').prepend('<button type="button" class="mobile-nav-toggle d-lg-none"><i class="icofont-navigation-menu"></i></button>');
+    $('body').prepend('<button type="button" class="mobile-nav-toggle d-lg-none"><i class="ri-menu-line"></i></button>');
     $('body').append('<div class="mobile-nav-overly"></div>');
 
-    $(document).on('click', '.mobile-nav-toggle', function (e) {
+    $(document).on('click', '.mobile-nav-toggle', function(e) {
       $('body').toggleClass('mobile-nav-active');
-      $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
+      $('.mobile-nav-toggle i').toggleClass('ri-menu-line ri-close-line');
       $('.mobile-nav-overly').toggle();
     });
 
-    $(document).click(function (e) {
+    $(document).click(function(e) {
       var container = $(".mobile-nav, .mobile-nav-toggle");
       if (!container.is(e.target) && container.has(e.target).length === 0) {
         if ($('body').hasClass('mobile-nav-active')) {
           $('body').removeClass('mobile-nav-active');
-          $('.mobile-nav-toggle i').toggleClass('icofont-navigation-menu icofont-close');
+          $('.mobile-nav-toggle i').toggleClass('ri-menu-line ri-close-line');
           $('.mobile-nav-overly').fadeOut();
         }
       }
@@ -92,34 +97,37 @@
   }
 
 
-  // Testimonials carousel (uses the Owl Carousel library)
-  // $(".testimonials-carousel").owlCarousel({
-  //   autoplay: true,
-  //   dots: true,
-  //   loop: true,
-  //   responsive: {
-  //     0: {
-  //       items: 1
-  //     },
-  //     768: {
-  //       items: 2
-  //     },
-  //     900: {
-  //       items: 3
-  //     }
-  //   }
-  // });
-
-
-
-
-
-  // Portfolio details carousel
-  $(".portfolio-details-carousel").owlCarousel({
-    autoplay: true,
-    dots: true,
-    loop: true,
-    items: 1
-  });
-
 })(jQuery);
+
+
+var swiper = new Swiper('.swiper-container', {
+      slidesPerView: 4,
+      spaceBetween: 20,
+      slidesPerGroup: 4,
+      loop: true,
+      loopFillGroupWithBlank: true,
+      pagination: {
+        el: '.swiper-pagination',
+        clickable: true,
+      },
+      navigation: {
+        nextEl: '.swiper-button-next',
+        prevEl: '.swiper-button-prev',
+      },
+
+breakpoints: {
+        320: {
+          slidesPerView: 1,
+          spaceBetween: 20,
+        },
+        768: {
+          slidesPerView: 2,
+          spaceBetween: 20,
+        },
+        1024: {
+          slidesPerView: 4,
+          spaceBetween: 20,
+        },
+      }
+
+    });
